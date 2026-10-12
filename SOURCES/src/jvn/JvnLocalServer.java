@@ -19,7 +19,7 @@ public interface JvnLocalServer {
 	/**
 	* create of a JVN object
 	* @param jos : the JVN object state
-  * @return the JVN object 
+    * @return the JVN object
 	* @throws JvnException
 	**/
 	public  JvnObject jvnCreateObject(Serializable jos)

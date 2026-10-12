@@ -44,7 +44,7 @@ public class JvnCoordImpl
 	public JvnCoordImpl() throws Exception {
 		super();
 		Registry registry = LocateRegistry.createRegistry(1099);
-    //rebind : Binds a name to a remote object, registering the object in the RMI registry.
+    	//rebind : Binds a name to a remote object, registering the object in the RMI registry.
 		registry.rebind("JvnCoord", this);
 		System.out.println("Coordinator ready as JvnCoord on port 1099");
 	}
@@ -58,8 +58,8 @@ public class JvnCoordImpl
 	}
 
 	/**
-  *  Allocate a NEW JVN object id (usually allocated to a 
-  *  newly created JVN object)
+    *  Allocate a NEW JVN object id (usually allocated to a
+    *  newly created JVN object)
 	* @throws java.rmi.RemoteException,JvnException
 	**/
 	public synchronized int jvnGetObjectId()
