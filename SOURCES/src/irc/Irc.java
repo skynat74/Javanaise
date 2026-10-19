@@ -19,7 +19,7 @@ public class Irc {
 	public TextArea		text;
 	public TextField	data;
 	Frame 			frame;
-	JvnObject       sentence;
+	ISentence       proxy;	// created once, reused on each read/write
 
 
   /**
@@ -52,10 +52,10 @@ public class Irc {
 
   /**
    * IRC Constructor
-   @param jo the JVN object representing the Chat
+   @param sentence the JVN object representing the Chat
    **/
-	public Irc(JvnObject jo) {
-		sentence = jo;
+	public Irc(JvnObject sentence) throws JvnException {
+		proxy = (ISentence) JvnProxy.newInstance(sentence);
 		frame=new Frame();
 		frame.setLayout(new GridLayout(1,1));
 		text=new TextArea(10,60);
@@ -92,9 +92,8 @@ public class Irc {
   **/
 	public void actionPerformed (ActionEvent e) {
 	 try {
-		// @Read on ISentence.read() → proxy takes the read lock
-		ISentence proxy = (ISentence) JvnProxy.newInstance(irc.sentence);
-		String s = proxy.read();
+		// @Read → proxy takes the read lock
+		String s = irc.proxy.read();
 		
 		// display the read value
 		irc.data.setText(s);
@@ -123,9 +122,8 @@ public class Irc {
 		// get the value to be written from the buffer
 		String s = irc.data.getText();
 
-		// @Write on ISentence.write() → proxy takes the write lock
-		ISentence proxy = (ISentence) JvnProxy.newInstance(irc.sentence);
-		proxy.write(s);
+		// @Write → proxy takes the write lock
+		irc.proxy.write(s);
 	 } catch (Exception ex) {
 		   System.out.println("IRC problem  : " + ex.getMessage());
 	 }

@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import static java.lang.System.out;
 /**
  * Dynamic proxy: intercepts method calls on a shared object,
  * takes the right JVN lock from @Read / @Write, then unlocks.
@@ -24,7 +23,6 @@ public class JvnProxy implements InvocationHandler {
 	 */
 	public static Object newInstance(JvnObject jo) throws JvnException {
 		Serializable obj = jo.jvnGetObjectState();
-		System.out.println("object state: " + obj);
 		return Proxy.newProxyInstance(
 				obj.getClass().getClassLoader(),
 				obj.getClass().getInterfaces(),
